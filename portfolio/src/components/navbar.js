@@ -47,6 +47,12 @@ const Navbar = (props) => {
                   </span>
                   <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow" />
                 </li>
+                <li className="group pl-6">
+                  <span className="cursor-pointer pt-0.5 font-header font-semibold uppercase text-white">
+                    <Link to="/users">Show Users</Link>
+                  </span>
+                  <span className="block h-0.5 w-full bg-transparent group-hover:bg-yellow" />
+                </li>
               </ul>
             </div>
             <div className="block lg:hidden">

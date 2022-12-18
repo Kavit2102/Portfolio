@@ -1,19 +1,17 @@
 import express from "express";
-// import { body } from "express-validator";
-// import { signUp } from "../controller/user.controller.js";
+import { body } from "express-validator";
+import { signUp, registeredUsers } from "../controller/user.controller.js";
 
 const router = express.Router();
 
 router.post(
-  "/signup",
-  // body("name", "Please enter your name").notEmpty(),
-  // body("email", "Please enter your email").notEmpty(),
-  // body("email", "Invalid email").isEmail(),
-  // body("message", "Message cannot be empty").notEmpty(),
-  // signUp
-  (req, res) => {
-    res.send(JSON.stringify(req.body));
-  }
+  "/create",
+  body("Name", "Name is Required !!!").notEmpty(),
+  body("Email", "Email is Required !!!").isEmail(),
+  body("Message", "Message is Required !!!").notEmpty(),
+  signUp
 );
+
+router.get("/users-list", registeredUsers);
 
 export default router;

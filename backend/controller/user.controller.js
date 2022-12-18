@@ -1,24 +1,39 @@
-import { User } from "../schema/user.schema.js";
+// import express from "express";
 import { validationResult } from "express-validator";
-import bcrypt from "bcryptjs";
+import { User } from "../schema/user.schema.js";
 
 export const signUp = async (request, response, next) => {
-  // console.log(request);
-  const errors = validationResult(request);
-  if (!errors.isEmpty()) {
-    console.log(errors);
+  let user = await User.findOne(request.body.Email).clone();
+  if (user) {
+    return response
+      .status(409)
+      .json({ message: "Sorry user already exsts with this email" });
   } else {
-    // console.log(request);
-    let password = request.body.password;
-    let encryptedPassword = await bcrypt.hash(password, 10);
-    request.body.password = encryptedPassword;
-    User.create(request.body)
-      .then((result) => {
-        return response.status(201).json(result);
-      })
-      .catch((err) => {
-        console.log(err);
-        return response.status(500).json({ error: "Server Error" });
-      });
+    const errors = validationResult(request);
+    console.log(errors);
+    if (!errors.isEmpty()) {
+      console.log("Here up!!!!");
+      return response.status(401).json(errors.array());
+    } else {
+      User.create(request.body)
+        .then((result) => {
+          // console.log(result);
+          return response.status(201).json(result);
+        })
+        .catch((err) => {
+          console.log("Here !!!");
+          return response.status(500).json({ error: err });
+        });
+    }
   }
+};
+
+export const registeredUsers = async (request, response, next) => {
+  let users = await User.find((err, data) => {
+    if (err) {
+      return next(err);
+    } else {
+      return response.status(201).json(data);
+    }
+  }).clone();
 };

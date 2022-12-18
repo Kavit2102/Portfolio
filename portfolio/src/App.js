@@ -6,6 +6,7 @@ import About from "./components/about";
 import Courses from "./components/courses";
 import Projects from "./components/projects";
 import Contact from "./components/contact";
+import Users from "./components/users";
 import Footer from "./components/footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -26,6 +27,8 @@ function App() {
           <Route exact path="/experience" element={<Courses />} />
           <Route exact path="/projects" element={<Projects />} />
           <Route exact path="/contact" element={<Contact />} />
+          <Route exact path="/contact" element={<Contact />} /> 
+          <Route exact path="/users" element={<Users />} /> 
         </Routes>
         <Footer iconColor={homeColor} />
       </BrowserRouter>
